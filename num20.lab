@@ -1,0 +1,238 @@
+ridley@ridley-HP-EliteBook-8460p:~$ cat > file_1.text
+abcde
+fghij
+klmno
+prstq
+^Z
+[1]+  Остановлен    cat > file_1.text
+ridley@ridley-HP-EliteBook-8460p:~$ cat > file_2.text
+alpha
+beta
+gamma
+delta^Z
+[2]+  Остановлен    cat > file_2.text
+
+1)
+ridley@ridley-HP-EliteBook-8460p:~$ comm --total file_1.text file_2.text
+abcde
+	alpha
+	beta
+fghij
+	gamma
+klmno
+prstq
+4	3	0	итого
+
+2)
+ridley@ridley-HP-EliteBook-8460p:~$ cmp -b file_1.text file_2.text
+file_1.text file_2.text различаются: байт 2, строка 1 равен  12 ^J 154 l
+
+3)
+ridley@ridley-HP-EliteBook-8460p:~$ wc -c file_1.text
+24 file_1.text
+
+4)
+ridley@ridley-HP-EliteBook-8460p:~$ dd count=2
+monday sunday
+tuesday
+monday sunday
+tuesday
+0+2 записей получено
+0+1 записей отправлено
+22 bytes copied, 63,3988 s, 0,0 kB/s
+
+5)
+ridley@ridley-HP-EliteBook-8460p:~$ diff -q file_1.text file_2.text
+Файлы file_1.text и file_2.text различаются
+
+6)
+ridley@ridley-HP-EliteBook-8460p:~$ grep --regexp=alpha file_1.text file_2.text 
+file_2.text:alpha
+
+7)
+ridley@ridley-HP-EliteBook-8460p:~$ join --header file_1.text file_2.text 
+abcde
+
+8)
+ridley@ridley-HP-EliteBook-8460p:~$ sort -n file_1.text file_2.text
+abcde
+alpha
+beta
+fghij
+gamma
+klmno
+prstq
+
+9)
+ridley@ridley-HP-EliteBook-8460p:~$ tail --lines=2 file_1.text file_2.text
+==> file_1.text <==
+klmno
+prstq
+
+==> file_2.text <==
+beta
+gamma
+
+10)
+ridley@ridley-HP-EliteBook-8460p:~$ tee -a file_1.text file_2.text
+qwerty
+qwerty
+^Z
+[1]+  Остановлен    tee -a file_1.text file_2.text
+
+ridley@ridley-HP-EliteBook-8460p:~$ cat file_1.text
+abcde
+fghij
+klmno
+prstq
+qwerty
+
+ridley@ridley-HP-EliteBook-8460p:~$ cat file_2.text
+alpha
+beta
+gamma
+qwerty
+
+11)
+ridley@ridley-HP-EliteBook-8460p:~$ sum -r file_1.text file_2.text
+29366     1 file_1.text
+29366     1 file_2.text
+
+ridley@ridley-HP-EliteBook-8460p:~$ cat > file_3.t
+tutta bene
+alpha
+pyramid black tea
+green
+sunday            
+^Z
+[3]+  Остановлен    cat > file_3.t
+
+ridley@ridley-HP-EliteBook-8460p:~$ cat > file_4.t
+isabella
+grape
+unix abc
+sdfghjlhg
+123456
+09876
+qwertyuio
+^Z
+[4]+  Остановлен    cat > file_4.t
+
+12)
+ridley@ridley-HP-EliteBook-8460p:~$ head --lines -3 file_3.t file_4.t
+==> file_3.t <==
+tutta bene
+alpha
+
+==> file_4.t <==
+isabella
+grape
+unix abc
+sdfghjlhg
+
+13)
+ridley@ridley-HP-EliteBook-8460p:~$ du -c file_3.t file_4.t
+4	file_3.t
+4	file_4.t
+8	итого
+
+14)
+ridley@ridley-HP-EliteBook-8460p:~$ df -a file_3.t
+Файл.система   1K-блоков Использовано  Доступно Использовано% Cмонтировано в
+/dev/sda5      129952868      9927776 113380768            9% /
+
+15)
+ridley@ridley-HP-EliteBook-8460p:~$ paste --serial file_3.t file_4.t
+tutta bene	alpha	pyramid black tea	green	sunday
+isabella	grape	unix abc	sdfghjlhg	123456	09876	qwertyuio
+
+16)
+ridley@ridley-HP-EliteBook-8460p:~$ sed 's/^/        /' file_1.text > file_new.txt
+ridley@ridley-HP-EliteBook-8460p:~$ ls
+ answer~   f1.t          file_1.text    file_3.text.gz   file_new.txt   lab8.c.c~        num20.lab   Документы     Общедоступные
+ arc.tar   f2.txt~       file_2.text    file_4.t~        lab10.c~       lab9.c~          snap        Загрузки     'Рабочий стол'
+ dir1      fibonacci.o   file_3.t~      file_4.t.bz2     lab11.c~       mainfile         test~       Изображения   Шаблоны
+ extra.t   file10.c~     file_3.t.bz2   file_4.t.gz      lab8.c~        newcleanfolder   Видео       Музыка
+ridley@ridley-HP-EliteBook-8460p:~$ cat file_new.txt
+        abcde
+        fghij
+        klmno
+        prstq
+        qwerty
+
+17)
+ridley@ridley-HP-EliteBook-8460p:~$ tar -cf arc.tar file_3.t file_4.t
+ridley@ridley-HP-EliteBook-8460p:~$ tar -tvf arc.tar 
+-rw-r--r-- ridley/ridley    48 2019-03-01 20:31 file_3.t
+-rw-r--r-- ridley/ridley    57 2019-03-01 20:31 file_4.t
+ridley@ridley-HP-EliteBook-8460p:~$ mktemp -d 
+/tmp/tmp.KDpDWAxCgD
+
+18)
+ridley@ridley-HP-EliteBook-8460p:~$ vim
+
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                     VIM — Vi IMproved (улучшенный Vi)                                                       
+~                                                                                                                                             
+~                                                              версия 8.0.1453                                                                
+~                                                          Брам Мооленаар и другие                                                            
+~                                   С изменениями, внесёнными pkg-vim-maintainers@lists.alioth.debian.org                                     
+~                                        Vim это свободно распространяемая программа с открытым кодом                                         
+~                                                                                                                                             
+~                                               Станьте зарегистрированным пользователем Vim!                                                 
+~                                       наберите :help register<Enter>   для получения информации                                             
+~                                                                                                                                             
+~                                       наберите :q<Enter>               чтобы выйти из программы                                             
+~                                       наберите :help<Enter> или <F1>   для получения справки                                                
+~                                       наберите :help version8<Enter>   чтобы узнать об этой версии                                          
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+~                                                                                                                                             
+:q
+
+19)
+ridley@ridley-HP-EliteBook-8460p:~$ gzip -k file_4.t
+ridley@ridley-HP-EliteBook-8460p:~$ ls
+ answer~   f1.t          file_1.text   file_3.text.gz   lab10.c~    lab9.c~          snap        Загрузки       'Рабочий стол'
+ arc.tar   f2.txt~       file_2.text   file_4.t         lab11.c~    mainfile         test~       Изображения     Шаблоны
+ dir1      fibonacci.o   file_3.t      file_4.t~        lab8.c~     newcleanfolder   Видео       Музыка
+ extra.t   file10.c~     file_3.t~     file_4.t.gz      lab8.c.c~   num20.lab        Документы   Общедоступные
+
+20)ridley@ridley-HP-EliteBook-8460p:~$ bzip2 file_3.t file_4.t
+ridley@ridley-HP-EliteBook-8460p:~$ ls
+ answer~   f1.t          file_1.text    file_3.text.gz   lab10.c~    lab9.c~          snap        Загрузки       'Рабочий стол'
+ arc.tar   f2.txt~       file_2.text    file_4.t~        lab11.c~    mainfile         test~       Изображения     Шаблоны
+ dir1      fibonacci.o   file_3.t~      file_4.t.bz2     lab8.c~     newcleanfolder   Видео       Музыка
+ extra.t   file10.c~     file_3.t.bz2   file_4.t.gz      lab8.c.c~   num20.lab        Документы   Общедоступные
+ridley@ridley-HP-EliteBook-8460p:~$ 
+
+
+
+
+
+
+
+
+
+
+
+
